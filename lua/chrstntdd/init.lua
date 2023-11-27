@@ -56,5 +56,21 @@ require('lazy').setup({
     'windwp/nvim-autopairs',
     event = "InsertEnter",
     opts = {} -- this is equalent to setup({}) function
-  }
+  },
+
+  {
+    "nvim-tree/nvim-web-devicons"
+  },
+
+  {
+    "sontungexpt/sttusline",
+    branch = "table_version",
+    dependencies = {
+        "nvim-tree/nvim-web-devicons",
+    },
+    event = { "BufEnter" },
+    config = function(_, opts)
+        require("sttusline").setup()
+    end,
+  },
 })
