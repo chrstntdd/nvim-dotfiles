@@ -16,21 +16,19 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require('lazy').setup({
-  "folke/which-key.nvim", 
+  "folke/which-key.nvim",
   "ThePrimeagen/vim-be-good",
   {"folke/neoconf.nvim", cmd = "Neoconf"},
   "folke/neodev.nvim",
   "talha-akram/noctis.nvim",
-  { 'rose-pine/neovim', name = 'rose-pine' },
   {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate"
-  },  
+  },
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.4',
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
-  
   {
 	  'VonHeikemen/lsp-zero.nvim',
 	  branch = 'v1.x',

@@ -3,7 +3,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 
 vim.cmd([[
-  colorscheme rose-pine
+  colorscheme noctis_uva
 ]])
 
 vim.opt.guicursor = ""
