@@ -79,4 +79,8 @@ require('lazy').setup({
         require("sttusline").setup()
     end,
   },
+
+  {
+    import = "chrstntdd.plugins"
+  }
 })
