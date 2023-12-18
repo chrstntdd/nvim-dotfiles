@@ -16,7 +16,5 @@ require("lazy").setup({
 		import = "chrstntdd.plugins",
 	},
 }, {
-	install = {
-		colorscheme = { "noctis_bordo" },
-	},
+	install = {},
 })

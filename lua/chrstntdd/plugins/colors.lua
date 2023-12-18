@@ -1,8 +1,20 @@
+local themes = {
+	"noctis_bordo",
+	"noctis_uva",
+	"noctis_minimus",
+}
+
+local function selectRandomTheme(themeList)
+	math.randomseed(os.time())
+	local index = math.random(#themeList)
+	return themeList[index]
+end
+
 return {
 	"talha-akram/noctis.nvim",
 	priority = 1000,
 	config = function()
-		vim.cmd([[ colorscheme noctis_bordo ]])
+		-- Assign random theme
+		vim.cmd("colorscheme " .. selectRandomTheme(themes))
 	end,
 }
-
