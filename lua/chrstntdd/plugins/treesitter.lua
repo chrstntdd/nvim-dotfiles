@@ -2,7 +2,7 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
-		event = "VeryLazy",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-context",
 		},
@@ -64,6 +64,7 @@ return {
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",
+		event = { "BufReadPre", "BufNewFile" },
 		opts = {},
 	},
 }
