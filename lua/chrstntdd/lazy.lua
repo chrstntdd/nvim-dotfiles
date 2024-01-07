@@ -17,4 +17,5 @@ require("lazy").setup({
 	},
 }, {
 	install = {},
+	change_detection = { notify = false },
 })
