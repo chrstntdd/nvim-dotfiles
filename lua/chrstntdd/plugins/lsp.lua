@@ -2,14 +2,25 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
+		"hrsh7th/cmp-buffer",
+		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-nvim-lsp",
-		{ "antosha417/nvim-lsp-file-operations", config = true },
+		"hrsh7th/cmp-nvim-lua",
+		{
+			"j-hui/fidget.nvim",
+			tag = "v1.2.0",
+			opts = {},
+		},
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local keymap = vim.keymap
 		local opts = { noremap = true, silent = true }
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		require("mason").setup({})
+
 		local on_attach = function(client, bufnr)
 			opts.buffer = bufnr
 
@@ -56,8 +67,26 @@ return {
 			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 		end
 
-		-- used to enable autocompletion (assign to every lsp server config)
-		local capabilities = cmp_nvim_lsp.default_capabilities()
+		require("mason-lspconfig").setup({
+			ensure_installed = {
+				"tsserver",
+				"html",
+				"cssls",
+				"tailwindcss",
+				"lua_ls",
+				"emmet_ls",
+			},
+			automatic_installation = true,
+			handlers = {
+				function(server_name)
+					require("lspconfig")[server_name].setup({})
+				end,
+			},
+		})
+
+		vim.diagnostic.config({
+			virtual_text = true,
+		})
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		-- (not in youtube nvim video)
@@ -95,10 +124,9 @@ return {
 		lspconfig["emmet_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
-			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "svelte" },
 		})
 
-		-- configure lua server (with special settings)
 		lspconfig["lua_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
