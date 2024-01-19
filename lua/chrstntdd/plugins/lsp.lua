@@ -106,6 +106,11 @@ return {
 		lspconfig["tsserver"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+			settings = {
+				completions = {
+					completeFunctionCalls = true,
+				},
+			},
 		})
 
 		-- configure css server

@@ -2,24 +2,28 @@ return {
 	"hrsh7th/nvim-cmp",
 	event = { "BufReadPost", "BufNewFile" },
 	dependencies = {
+		"L3MON4D3/LuaSnip",
 		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"rafamadriz/friendly-snippets",
-		"saadparwaiz1/cmp_luasnip",
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-nvim-lua",
+		"hrsh7th/cmp-path",
 		"onsails/lspkind.nvim",
-		{
-			"L3MON4D3/LuaSnip",
-			version = "v2.*",
-			build = "make install_jsregexp",
-		},
+		"rafamadriz/friendly-snippets",
+		"saadparwaiz1/cmp_luasnip",
+		"windwp/nvim-autopairs",
+		"windwp/nvim-ts-autotag",
 	},
 	config = function()
 		local cmp = require("cmp")
+		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 		local lspkind = require("lspkind")
 		local luasnip = require("luasnip")
 		local cmp_select = { behavior = cmp.SelectBehavior.Select }
+
+		require("nvim-autopairs").setup()
+
+		-- Integrate nvim-autopairs with cmp
+		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 		require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -36,9 +40,11 @@ return {
 			mapping = cmp.mapping.preset.insert({
 				["<C-k>"] = cmp.mapping.select_prev_item(cmp_select),
 				["<C-j>"] = cmp.mapping.select_next_item(cmp_select),
-				["<C-b>"] = cmp.mapping.scroll_docs(-4),
-				["<C-f>"] = cmp.mapping.scroll_docs(4),
-				["<C-e>"] = cmp.mapping.abort(),
+				["<C-c>"] = cmp.mapping.abort(),
+				["<C-d>"] = cmp.mapping.scroll_docs(-4),
+				["<C-u>"] = cmp.mapping.scroll_docs(4),
+				["<C-Space>"] = cmp.mapping.complete({}),
+				["<CR>"] = cmp.mapping.confirm({ select = true }),
 				["<Tab>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
 						cmp.select_next_item()
@@ -57,11 +63,6 @@ return {
 						fallback()
 					end
 				end, { "i", "s" }),
-				["<C-d>"] = cmp.mapping.scroll_docs(-4),
-				["<C-u>"] = cmp.mapping.scroll_docs(4),
-				["<C-Space>"] = cmp.mapping.complete({}),
-				["<C-c>"] = cmp.mapping.abort(),
-				["<CR>"] = cmp.mapping.confirm({ select = true }),
 			}),
 			sources = cmp.config.sources({
 				{ name = "luasnip", max_item_count = 3 },
