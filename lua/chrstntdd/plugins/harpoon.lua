@@ -32,8 +32,6 @@ return {
 
 		local slots = { 1, 2, 3, 4, 5 }
 		for _, n in ipairs(slots) do
-			print(n)
-
 			vim.keymap.set("n", "<leader>" .. n, "<cmd>lua require('harpoon.ui').nav_file(" .. n .. ")<cr>")
 		end
 	end,
