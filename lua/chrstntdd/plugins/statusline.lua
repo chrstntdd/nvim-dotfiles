@@ -1,11 +1,9 @@
 return {
-	"sontungexpt/sttusline",
-	branch = "table_version",
-	dependencies = {
-		"nvim-tree/nvim-web-devicons",
+	"nvim-lualine/lualine.nvim",
+	dependencies = { "nvim-tree/nvim-web-devicons" },
+	config = {
+		sections = {
+			lualine_x = { "filetype" },
+		},
 	},
-	event = { "BufEnter" },
-	config = function(_, opts)
-		require("sttusline").setup()
-	end,
 }
