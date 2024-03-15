@@ -1,9 +1,11 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
-	config = {
+	opts = {
 		sections = {
-			lualine_x = { "filetype" },
+			lualine_x = {},
+			lualine_c = {
+				{ "filename", path = 1 }, -- Display full path
+			},
 		},
 	},
 }

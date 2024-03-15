@@ -16,5 +16,6 @@ return {
 	config = function()
 		-- Assign random theme
 		vim.cmd("colorscheme " .. selectRandomTheme(themes))
+		vim.cmd("hi comment gui=none")
 	end,
 }

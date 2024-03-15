@@ -25,7 +25,7 @@ return {
 			opts.buffer = bufnr
 
 			opts.desc = "Show LSP references"
-			keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+			keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
 			opts.desc = "Go to declaration"
 			keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
@@ -51,23 +51,18 @@ return {
 			opts.desc = "Show line diagnostics"
 			keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
-			opts.desc = "Go to previous diagnostic"
-			keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
-
-			opts.desc = "Go to next diagnostic"
-			keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
-
 			opts.desc = "Show documentation for what is under cursor"
 			keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
+			opts.desc = "Restart LSP"
+			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+
 			opts.desc = "Show function signature"
 			keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-
-			opts.desc = "Restart LSP"
-			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 		end
 
 		require("mason-lspconfig").setup({
+			automatic_installation = { exclude = { "ocamllsp" } },
 			ensure_installed = {
 				"tsserver",
 				"html",
@@ -76,9 +71,9 @@ return {
 				"lua_ls",
 				"emmet_ls",
 				"jsonls",
+				"ocamllsp",
 				"typos_lsp",
 			},
-			automatic_installation = true,
 			handlers = {
 				function(server_name)
 					require("lspconfig")[server_name].setup({})
@@ -91,8 +86,7 @@ return {
 		})
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
-		-- (not in youtube nvim video)
-		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+		local signs = { Error = "E ", Warn = "W ", Hint = "H ", Info = "I " }
 		for type, icon in pairs(signs) do
 			local hl = "DiagnosticSign" .. type
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
@@ -131,6 +125,18 @@ return {
 					completeFunctionCalls = true,
 				},
 			},
+			root_dir = lspconfig.util.root_pattern("package.json"),
+		})
+
+		lspconfig["denols"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = {
+				completions = {
+					completeFunctionCalls = true,
+				},
+			},
+			root_dir = lspconfig.util.root_pattern("deno.json"),
 		})
 
 		lspconfig["cssls"].setup({
@@ -176,6 +182,24 @@ return {
 						},
 					},
 				},
+			},
+		})
+
+		lspconfig["ocamllsp"].setup({
+			cmd = { "ocamllsp" },
+			filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
+			root_dir = lspconfig.util.root_pattern(
+				"*.opam",
+				"esy.json",
+				"package.json",
+				".git",
+				"dune-project",
+				"dune-workspace"
+			),
+			on_attach = on_attach,
+			capabilities = capabilities,
+			settings = {
+				codelens = { enabled = true },
 			},
 		})
 	end,

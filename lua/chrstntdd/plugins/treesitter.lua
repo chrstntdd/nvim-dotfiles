@@ -1,7 +1,6 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-context",
@@ -12,6 +11,7 @@ return {
 				ensure_installed = {
 					"bash",
 					"css",
+					"comment",
 					"dockerfile",
 					"html",
 					"javascript",
@@ -53,7 +53,6 @@ return {
 					-- Instead of true it can also be a list of languages
 					additional_vim_regex_highlighting = false,
 				},
-
 				incremental_selection = {
 					enable = true,
 					keymaps = {
