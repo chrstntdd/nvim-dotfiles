@@ -38,12 +38,6 @@ return {
 				indent = {
 					enable = true,
 				},
-				autopairs = {
-					enable = true,
-				},
-				autotag = {
-					enable = true,
-				},
 				highlight = {
 					enable = true,
 

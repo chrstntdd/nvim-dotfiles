@@ -21,6 +21,7 @@ return {
 				lsp_fallback = true,
 				async = false,
 				timeout_ms = 600,
+				silent = true,
 			},
 		})
 
@@ -29,6 +30,7 @@ return {
 				lsp_fallback = true,
 				async = false,
 				timeout_ms = 600,
+				silent = true,
 			})
 		end, { desc = "Format file" })
 	end,

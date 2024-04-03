@@ -1,6 +1,6 @@
 return {
 	"hrsh7th/nvim-cmp",
-	event = { "InsertEnter" },
+	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"L3MON4D3/LuaSnip",
 		"hrsh7th/cmp-buffer",
@@ -8,14 +8,11 @@ return {
 		"hrsh7th/cmp-nvim-lua",
 		"hrsh7th/cmp-path",
 		"onsails/lspkind.nvim",
-		"rafamadriz/friendly-snippets",
+		-- Necessary to bridge luasnip to nvim cmp
 		"saadparwaiz1/cmp_luasnip",
-		"windwp/nvim-autopairs",
-		"windwp/nvim-ts-autotag",
 	},
 	config = function()
 		local cmp = require("cmp")
-		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 		local lspkind = require("lspkind")
 		local ls = require("luasnip")
 		local fmt = require("luasnip.extras.fmt").fmt
@@ -28,14 +25,9 @@ return {
 		local isn = ls.indent_snippet_node
 		local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
-		require("nvim-autopairs").setup()
-
-		-- Integrate nvim-autopairs with cmp
-		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-
-		require("luasnip.loaders.from_vscode").lazy_load()
-
 		cmp.setup({
+			history = true,
+			update_events = { "TextChanged", "TextChangedI" },
 			snippet = {
 				expand = function(args)
 					ls.lsp_expand(args.body)
@@ -72,11 +64,15 @@ return {
 				["<C-l>"] = cmp.mapping(function()
 					if ls.expand_or_locally_jumpable() then
 						ls.expand_or_jump()
+					elseif ls.choice_active() then
+						ls.change_choice(1)
 					end
 				end, { "i", "s" }),
 				["<C-h>"] = cmp.mapping(function()
 					if ls.locally_jumpable(-1) then
 						ls.jump(-1)
+					elseif ls.choice_active() then
+						ls.change_choice(-1)
 					end
 				end, { "i", "s" }),
 			}),
@@ -106,6 +102,32 @@ return {
 				t(")"),
 				i(0),
 			}),
+
+			snippet({ trig = "lmt", desc = "Lingui msg macro" }, {
+				t("_(`"),
+				i(1),
+				t("`)"),
+				i(0),
+			}),
+
+			snippet({ trig = "cn", desc = "className attribute as a string literal" }, {
+				t('className="'),
+				i(1),
+				t('"'),
+				i(0),
+			}),
+			snippet({ trig = "cn`", desc = "className attribute as a template string" }, {
+				t("className={`${"),
+				i(1),
+				t("}`}"),
+				i(0),
+			}),
+			snippet({ trig = "cnx", desc = "className attribute with clsx" }, {
+				t("className={clsx(["),
+				i(1),
+				t("])}"),
+				i(0),
+			}),
 			snippet({ trig = "pp", desc = "Pretty print recursively" }, {
 				t("console.dir("),
 				i(1),
@@ -117,14 +139,14 @@ return {
 				{ trig = "ReL", desc = "A Remix loader" },
 				fmt(
 					[[
-async function loader(args: LoaderFunctionArgs) {{
+export async function loader(args: LoaderFunctionArgs) {{
   return {returnType}
 }}
       ]],
 					{
 						returnType = c(1, {
-							t("return json({ some: {ob: 'ject'} })"),
-							t("return defer({ some: prom })"),
+							t("json({ some: {ob: 'ject'} })"),
+							t("defer({ some: prom })"),
 						}),
 					}
 				)
