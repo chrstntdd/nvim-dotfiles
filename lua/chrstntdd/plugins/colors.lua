@@ -2,6 +2,8 @@ local themes = {
 	"noctis_bordo",
 	"noctis_uva",
 	"noctis_minimus",
+	"noctis_azureus",
+	"noctis_obscuro",
 }
 
 local function selectRandomTheme(themeList)

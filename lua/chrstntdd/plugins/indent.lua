@@ -1,7 +1,7 @@
 return {
 	"echasnovski/mini.nvim",
 	version = "*",
-	event = "VeryLazy",
+	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local plugin = require("mini.indentscope")
 		plugin.setup({
