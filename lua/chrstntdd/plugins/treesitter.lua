@@ -13,7 +13,6 @@ return {
 					"css",
 					"astro",
 					"comment",
-					"dockerfile",
 					"html",
 					"javascript",
 					"json",

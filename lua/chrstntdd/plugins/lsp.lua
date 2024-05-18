@@ -63,17 +63,6 @@ return {
 
 		require("mason-lspconfig").setup({
 			automatic_installation = { exclude = { "ocamllsp" } },
-			ensure_installed = {
-				"tsserver",
-				"html",
-				"cssls",
-				"tailwindcss",
-				"lua_ls",
-				"emmet_ls",
-				"jsonls",
-				"ocamllsp",
-				"typos_lsp",
-			},
 			handlers = {
 				function(server_name)
 					require("lspconfig")[server_name].setup({})
