@@ -1,5 +1,6 @@
 return {
 	"neovim/nvim-lspconfig",
+	version = "*",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"williamboman/mason.nvim",
@@ -14,12 +15,43 @@ return {
 			opts = {},
 		},
 	},
+	opts = {
+		servers = {
+			eslint = {
+				settings = {
+					useFlatConfig = false,
+					experimental = {
+						useFlatConfig = nil,
+					},
+				},
+			},
+		},
+		setup = {
+			eslint = function()
+				require("lazyvim.util").lsp.on_attach(function(client)
+					if client.name == "eslint" then
+						client.server_capabilities.documentFormattingProvider = true
+					elseif client.name == "tsserver" then
+						client.server_capabilities.documentFormattingProvider = false
+					end
+				end)
+			end,
+		},
+	},
 	config = function()
+		require("mason").setup({})
 		local lspconfig = require("lspconfig")
 		local keymap = vim.keymap
 		local opts = { noremap = true, silent = true }
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
-		require("mason").setup({})
+
+		-- Perf
+		-- https://www.reddit.com/r/neovim/comments/161tv8l/comment/jzfen6b/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+		local capabilities = vim.tbl_deep_extend(
+			"force",
+			vim.lsp.protocol.make_client_capabilities(),
+			require("cmp_nvim_lsp").default_capabilities()
+		)
+		capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 
 		local on_attach = function(client, bufnr)
 			opts.buffer = bufnr
@@ -163,6 +195,7 @@ return {
 						classRegex = {
 							{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
 							{ "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+							{ "tv\\((([^()]*|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
 						},
 					},
 				},
@@ -212,6 +245,11 @@ return {
 		})
 
 		lspconfig["astro"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lspconfig["eslint"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})

@@ -10,11 +10,26 @@ return {
 		"onsails/lspkind.nvim",
 		-- Necessary to bridge luasnip to nvim cmp
 		"saadparwaiz1/cmp_luasnip",
+		"windwp/nvim-autopairs",
 	},
 	config = function()
 		local cmp = require("cmp")
+		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 		local lspkind = require("lspkind")
+		local types = require("luasnip.util.types")
 		local ls = require("luasnip")
+
+		ls.setup({
+			ext_opts = {
+				[types.choiceNode] = {
+					active = { virt_text = { { "●", "Orange" } }, hl_mode = "combine" },
+				},
+			},
+		})
+
+		require("nvim-autopairs").setup()
+		-- Integrate nvim-autopairs with cmp
+		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 		cmp.setup({
 			history = true,
@@ -59,6 +74,7 @@ return {
 						ls.change_choice(1)
 					end
 				end, { "i", "s" }),
+
 				["<C-h>"] = cmp.mapping(function()
 					if ls.locally_jumpable(-1) then
 						ls.jump(-1)

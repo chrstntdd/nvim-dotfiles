@@ -62,6 +62,35 @@ export async function loader(args: LoaderFunctionArgs) {{
 			}
 		)
 	),
+	snippet(
+		{ trig = "dc", desc = "JS[D]oc [C]omment" },
+
+		fmt(
+			[[
+/**
+ * @{tag}
+ *  {content}
+ */
+      ]],
+			{ tag = i(1), content = i(0) }
+		)
+	),
+
+	snippet(
+		{ trig = "imp", desc = "Import" },
+		fmt(
+			[[
+import {importClause} from "{moduleSpecifier}"
+  ]],
+			{
+				importClause = c(1, {
+					t("* as "),
+					t("{{ }}"),
+				}),
+				moduleSpecifier = i(0),
+			}
+		)
+	),
 }
 
 ls.add_snippets("typescript", ts_tsx)
