@@ -206,7 +206,7 @@ return {
     lspconfig["emmet_ls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      filetypes = { "html", "typescriptreact", "javascriptreact", "css", "svelte" },
+      filetypes = { "html", "typescriptreact", "javascriptreact", "css", "svelte", "typescript", "javascript" },
     })
 
     lspconfig["lua_ls"].setup({
