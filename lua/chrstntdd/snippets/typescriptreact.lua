@@ -98,6 +98,10 @@ import {importClause} from "{moduleSpecifier}"
 
   snippet({ trig = "eslD", desc = "ESLint disable" },
     t("/* eslint-disable */")
+  ),
+
+  snippet({ trig = "tsee", desc = "silence TypeScript compiler" },
+    t('// @ts-expect-error Let me live')
   )
 
 }
