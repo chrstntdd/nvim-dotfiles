@@ -13,12 +13,20 @@ return {
     local open_with_trouble = require("trouble.sources.telescope").open
 
     telescope.setup({
+      pickers = {
+        find_files = {
+          hidden = true
+        }
+      },
       extensions = {
         ["ui-select"] = {
           require("telescope.themes").get_dropdown(),
         },
       },
       defaults = {
+        file_ignore_patterns = {
+          "node_modules", ".git"
+        },
         mappings = {
           i = {
             ["<C-k>"] = actions.move_selection_previous,

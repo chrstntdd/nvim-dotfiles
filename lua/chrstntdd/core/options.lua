@@ -47,13 +47,15 @@ opt.inccommand = "split"
 opt.cursorline = true
 opt.colorcolumn = "80"
 
-opt.clipboard = "unnamed,unnamedplus"
+vim.schedule(function()
+  opt.clipboard = "unnamed,unnamedplus"
+end)
 
 opt.guicursor = {
-	"n-v-c:block", -- Normal, visual, command-line: block cursor
-	"i-ci-ve:ver25", -- Insert, command-line insert, visual-exclude: vertical bar cursor with 25% width
-	"r-cr:hor20", -- Replace, command-line replace: horizontal bar cursor with 20% height
-	"o:hor50", -- Operator-pending: horizontal bar cursor with 50% height
-	"a:blinkwait700-blinkoff400-blinkon250", -- All modes: blinking settings
-	"sm:block-blinkwait175-blinkoff150-blinkon175", -- Showmatch: block cursor with specific blinking settings
+  "n-v-c:block",                                 -- Normal, visual, command-line: block cursor
+  "i-ci-ve:ver25",                               -- Insert, command-line insert, visual-exclude: vertical bar cursor with 25% width
+  "r-cr:hor20",                                  -- Replace, command-line replace: horizontal bar cursor with 20% height
+  "o:hor50",                                     -- Operator-pending: horizontal bar cursor with 50% height
+  "a:blinkwait700-blinkoff400-blinkon250",       -- All modes: blinking settings
+  "sm:block-blinkwait175-blinkoff150-blinkon175", -- Showmatch: block cursor with specific blinking settings
 }

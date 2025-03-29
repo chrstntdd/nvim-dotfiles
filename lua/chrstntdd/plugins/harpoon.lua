@@ -30,7 +30,7 @@ return {
       { desc = "Navigate to next mark" }
     )
 
-    local slots = { 1, 2, 3, 4, 5 }
+    local slots = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
     for _, n in ipairs(slots) do
       vim.keymap.set("n", "<leader>" .. n, "<cmd>lua require('harpoon.ui').nav_file(" .. n .. ")<cr>")
     end
