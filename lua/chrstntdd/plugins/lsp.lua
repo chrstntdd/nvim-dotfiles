@@ -61,27 +61,27 @@ return {
 						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 					end
 
-					map("gr", "<cmd>Telescope lsp_references<CR>", "Show LSP references") -- show definition, references
+					map("gr", "<cmd>Telescope lsp_references<CR>", "Show LSP references")
 
-					map("gD", vim.lsp.buf.declaration, "Go to declaration") -- go to declaration
+					map("gD", vim.lsp.buf.declaration, "Go to declaration")
 
-					map("gd", "<cmd>Telescope lsp_definitions<CR>", "Show LSP definitions") -- show lsp definitions
+					map("gd", "<cmd>Telescope lsp_definitions<CR>", "Show LSP definitions")
 
-					map("gi", "<cmd>Telescope lsp_implementations<CR>", "Show LSP implementations") -- show lsp implementations
+					map("gi", "<cmd>Telescope lsp_implementations<CR>", "Show LSP implementations")
 
-					map("gt", "<cmd>Telescope lsp_type_definitions<CR>", "Show LSP type definitions") -- show lsp type definitions
+					map("gt", "<cmd>Telescope lsp_type_definitions<CR>", "Show LSP type definitions")
 
-					map("<leader>ca", vim.lsp.buf.code_action, "See available code actions", { "n", "v" }) -- see available code actions, in visual mode will apply to selection
+					map("<leader>ca", vim.lsp.buf.code_action, "See available code actions", { "n", "v" })
 
-					map("<leader>rn", vim.lsp.buf.rename, "Smart rename") -- smart rename
+					map("<leader>rn", vim.lsp.buf.rename, "Smart rename")
 
-					map("<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "Show buffer diagnostics") -- show  diagnostics for file
+					map("<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "Show buffer diagnostics")
 
-					map("<leader>d", vim.diagnostic.open_float, "Show line diagnostics") -- show diagnostics for line
+					map("<leader>d", vim.diagnostic.open_float, "Show line diagnostics")
 
 					map("K", function()
 						vim.lsp.buf.hover({ border = "rounded" })
-					end, "Show documentation for what is under cursor") -- show documentation for what is under cursor
+					end, "Show documentation for what is under cursor")
 
 					map("<C-h>", function()
 						vim.lsp.buf.signature_help({ border = "rounded" })
