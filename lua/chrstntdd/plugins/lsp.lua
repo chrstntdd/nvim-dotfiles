@@ -241,24 +241,19 @@ return {
 					},
 					gleam = {},
 					astro = {},
+				},
+				others = {
 					ocamllsp = {
-						cmd = { "ocamllsp" },
-						filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
-						root_dir = lspconfig.util.root_pattern(
-							"*.opam",
-							"package.json",
-							".git",
-							"dune-project",
-							"dune-workspace"
-						),
+						-- use local switch's version of ocamllsp instead of using mason
+						cmd = { "dune", "exec", "ocamllsp" },
+						manual_install = true,
 						settings = {
-							codelens = { enabled = true },
+							codelens = { enable = true },
+							inlayHints = { enable = true },
+							syntaxDocumentation = { enable = true },
 						},
 					},
-					gleam = {},
-					astro = {},
 				},
-				others = {},
 			}
 
 			local ensure_installed = vim.tbl_keys(servers.mason or {})
