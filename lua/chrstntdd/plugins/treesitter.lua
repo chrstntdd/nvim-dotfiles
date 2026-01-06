@@ -37,6 +37,7 @@ return {
 
 				indent = {
 					enable = true,
+					disable = { "ocaml", "ocaml_interface" },
 				},
 				highlight = {
 					enable = true,
