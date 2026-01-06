@@ -53,3 +53,5 @@ vim.keymap.set(
 	":%bd|e#|bd#<CR>|'\"",
 	{ desc = "[C]leanup [A]all [B]uffers and reopen current buffer. Cursor position is retained with a mark" }
 )
+
+vim.keymap.set("n", "<leader><leader>wr", ":set wrap<CR>", { desc = "Toggle word wrap" })
