@@ -2,7 +2,9 @@ return {
 	{
 		"stevearc/oil.nvim",
 		config = function()
-			require("oil").setup({
+			local oil = require("oil")
+
+			oil.setup({
 				columns = { "icon" },
 				keymaps = {
 					["<C-h>"] = false,
@@ -14,10 +16,10 @@ return {
 			})
 
 			-- Open parent directory in current window
-			vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open cwd" })
+			vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory in current window" })
 
 			-- Open parent directory in floating window
-			vim.keymap.set("n", "<space>-", require("oil").toggle_float)
+			vim.keymap.set("n", "<space>-", oil.toggle_float)
 		end,
 	},
 }

@@ -16,7 +16,11 @@ return {
 		version = "*",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			{ "mason-org/mason.nvim", opts = {} },
+			{ "mason-org/mason.nvim", opts = {
+				ui = {
+					border = "rounded",
+				},
+			} },
 			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			{
@@ -193,6 +197,9 @@ return {
 									maxTsServerMemory = 12288,
 								},
 								inlayHints = vtsls_inlay_hints,
+								preferences = {
+									importModuleSpecifierEnding = ".ts",
+								},
 							},
 							javascript = { inlayHints = vtsls_inlay_hints },
 						},
@@ -239,19 +246,23 @@ return {
 							},
 						},
 					},
-					gleam = {},
 					astro = {},
 				},
 				others = {
 					ocamllsp = {
 						-- use local switch's version of ocamllsp instead of using mason
-						cmd = { "dune", "exec", "ocamllsp" },
+						-- cmd = { "dune", "exec", "ocamllsp" },
+						cmd = { "opam", "exec", "ocamllsp" },
 						manual_install = true,
 						settings = {
 							codelens = { enable = true },
 							inlayHints = { enable = true },
 							syntaxDocumentation = { enable = true },
 						},
+					},
+					gleam = {
+						cmd = { "gleam", "lsp" },
+						manual_install = true,
 					},
 				},
 			}

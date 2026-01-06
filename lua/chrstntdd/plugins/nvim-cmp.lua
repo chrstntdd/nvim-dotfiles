@@ -1,15 +1,15 @@
 return {
 	{
 		"saghen/blink.compat",
-		version = "*",
+		version = "2.*",
 		lazy = true,
-		opts = { impersonate_nvim_cmp = true },
+		-- make sure to set opts so that lazy.nvim calls blink.compat's setup
+		opts = {},
 	},
-
 	{
 		-- Autocompletion
 		"saghen/blink.cmp",
-		event = "VimEnter",
+		event = { "BufReadPre", "BufNewFile" },
 		version = "1.*",
 		dependencies = {
 			-- Snippet Engine
